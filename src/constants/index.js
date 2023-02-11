@@ -1,2 +1,3 @@
 import * as screens from './screens';
-export {screens};
+import * as colors from './colors';
+export {screens, colors};

@@ -12,13 +12,26 @@ const FriendDetailsScreen = props => {
   const [friendDetails, setFriendDetails] = useState({});
   const [index, setIndex] = useState({});
   useEffect(() => {
-    const data = route.params && route.params.data ? route.params.data : null;
-    const index = route.params && route.params.index ? route.params.index : 0;
-    setFirstName(data.First_Name__c);
-    setLasName(data.Last_Name__c);
-    setAge(data.Age__c + '');
-    setFriendDetails(data);
-    setIndex(index);
+    const data = props.friendsList.filter(
+      item => item.Id == route.params.Id,
+    )[0];
+    const index = props.friendsList.findIndex(
+      item => item.Id == route.params.Id,
+    );
+    if (index == -1) {
+      Alert.alert('Alert', 'No friend found with this ID', [
+        {
+          text: 'OK',
+          onPress: () => props.navigation.pop(),
+        },
+      ]);
+    } else {
+      setFirstName(data.First_Name__c);
+      setLasName(data.Last_Name__c);
+      setAge(data.Age__c + '');
+      setFriendDetails(data);
+      setIndex(index);
+    }
   }, []);
   const saveData = () => {
     if (firstName.length === 0) {

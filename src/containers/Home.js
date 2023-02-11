@@ -4,8 +4,9 @@ import {connect} from 'react-redux';
 import {registerFulfilled} from '../actions/friendListActions';
 import NetInfo from '@react-native-community/netinfo';
 import {screens} from '../constants';
+let isDataSynced  = false;
 function HomeScreen(props) {
-  const [isDataSynced, setSynced] = useState(false);
+  //const [isDataSynced, setSynced] = useState(false);
 
   useEffect(() => {
     const handleOpenURL = url => {
@@ -13,16 +14,8 @@ function HomeScreen(props) {
       const isForDetails = it.filter(item => item == 'friendId')[0];
       if (isForDetails) {
         const Id = it[it.length - 1];
-        const item = props.data.filter(item => item.Id == Id)[0];
-        const friendIndex = props.data.findIndex(item => item.Id == Id);
-        console.log('ID ', Id, friendIndex, item);
-        if (friendIndex == -1) {
-          alert('No friend found with this id.');
-          return;
-        }
         props.navigation.navigate(screens.FRIEND_DETAILS_SCREEN, {
-          data: item,
-          index: friendIndex,
+          Id: Id,
         });
       }
     };
@@ -41,8 +34,8 @@ function HomeScreen(props) {
         const addedList = props.data.filter(item => item.isAdded);
         if ((updatedList.length > 0 || addedList.length > 0) && !isDataSynced) {
           //Use Post API to post updated record
+          isDataSynced = true;
           alert('Updating your records.');
-          setSynced(true);
         }
       }
     });

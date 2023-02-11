@@ -1,7 +1,7 @@
 import React from 'react';
 import {NavigationContainer} from '@react-navigation/native';
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
-import {screens} from '../constants';
+import {colors, screens} from '../constants';
 import HomeScreen from '../containers/Home';
 import Settingscreen from '../containers/Settings';
 import FriendsStack from './FriendsStack';
@@ -61,7 +61,7 @@ function MyTabBar({state, descriptors, navigation}) {
             <Image
               style={[
                 {...styles.tabIcon},
-                {tintColor: isFocused ? '#673ab7' : '#222'},
+                {tintColor: isFocused ? colors.theme_color: '#222'},
               ]}
               source={
                 label == 'Home'
@@ -70,7 +70,7 @@ function MyTabBar({state, descriptors, navigation}) {
                   ? require('../assets/friends-icon.png')
                   : require('../assets/settings-icon.png')
               }></Image>
-            <Text style={{color: isFocused ? '#673ab7' : '#222'}}>{label}</Text>
+            <Text style={{color: isFocused ? colors.theme_color : '#222'}}>{label}</Text>
           </TouchableOpacity>
         );
       })}
@@ -79,7 +79,6 @@ function MyTabBar({state, descriptors, navigation}) {
 }
 
 function App() {
- 
   return (
     <NavigationContainer
       fallback={<ActivityIndicator color="blue" size="large" />}>
@@ -110,7 +109,13 @@ function App() {
   );
 }
 const styles = StyleSheet.create({
-  tabBarContainer: {flexDirection: 'row', height: 45},
+  tabBarContainer: {
+    flexDirection: 'row',
+    height: 55,
+    borderWidth: 1,
+    borderColor: colors.theme_color,
+    padding: 2,
+  },
   tabIcon: {
     height: 24,
     width: 24,

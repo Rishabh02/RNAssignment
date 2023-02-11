@@ -7,7 +7,6 @@ const AddFriend = props => {
   const [firstName, setFirstName] = useState('');
   const [lastName, setLasName] = useState('');
   const [age, setAge] = useState('');
-
   const saveData = () => {
     if (firstName.length === 0) {
       alert('Please enter first name');
@@ -45,21 +44,21 @@ const AddFriend = props => {
       <Text>Enter Your Friend Details</Text>
       <TextInput
         style={styles.input}
-        onChange={e => setFirstName(e.nativeEvent.text)}
+        onChangeText={setFirstName}
         value={firstName}
         placeholder="First Name"
         maxLength={30}
       />
       <TextInput
         style={styles.input}
-        onChange={e => setLasName(e.nativeEvent.text)}
+        onChangeText={setLasName}
         value={lastName}
         placeholder="Last Name"
         maxLength={30}
       />
       <TextInput
         style={styles.input}
-        onChange={e => setAge(e.nativeEvent.text)}
+        onChangeText={setAge}
         value={age}
         placeholder="Age"
         keyboardType="numeric"

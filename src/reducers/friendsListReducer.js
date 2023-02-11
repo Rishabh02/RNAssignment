@@ -17,6 +17,8 @@ const friendsListReducer = (state = initialState, {type, payload = {}}) => {
       return {
         ...state,
         friendsList: payload,
+        isFetching: false,
+
       };
     case PENDING:
       return {
@@ -27,6 +29,7 @@ const friendsListReducer = (state = initialState, {type, payload = {}}) => {
       return {
         ...state,
         errorData: payload,
+        isFetching: false,
       };
     case ADD_FRIEND:
       return {

@@ -11,7 +11,6 @@ const FriendDetailsScreen = props => {
   const [lastName, setLasName] = useState(data.Last_Name__c);
   const [age, setAge] = useState(data.Age__c + '');
   const [editable, setEditable] = useState(false);
-
   const saveData = () => {
     if (firstName.length === 0) {
       alert('Please enter first name');
@@ -57,7 +56,7 @@ const FriendDetailsScreen = props => {
       <Text>ID: {data.Id}</Text>
       <TextInput
         style={styles.input}
-        onChange={e => setFirstName(e.nativeEvent.text)}
+        onChangeText={setFirstName}
         value={firstName}
         placeholder="First Name"
         maxLength={30}
@@ -65,7 +64,7 @@ const FriendDetailsScreen = props => {
       />
       <TextInput
         style={styles.input}
-        onChange={e => setLasName(e.nativeEvent.text)}
+        onChangeText={setLasName}
         editable={editable}
         value={lastName}
         placeholder="Last Name"
@@ -73,7 +72,7 @@ const FriendDetailsScreen = props => {
       />
       <TextInput
         style={styles.input}
-        onChange={e => setAge(e.nativeEvent.text)}
+        onChangeText={setAge}
         editable={editable}
         value={age}
         placeholder="Age"

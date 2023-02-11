@@ -14,7 +14,7 @@ function HomeScreen(props) {
         const addedList = props.data.filter(item => item.isAdded);
         if (updatedList.length > 0 || addedList.length > 0) {
           //Use Post API to post updated record
-          alert('Updating your records');
+          alert('Updating your records.');
         }
       }
     });

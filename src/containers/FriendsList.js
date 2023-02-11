@@ -63,8 +63,8 @@ const FriendsListScreen = props => {
   );
 };
 const mapStateToProps = state => ({
-  data: state.counter.friendsList,
-  isFetching: state.counter.isFetching,
+  data: state.friendsListReducer.friendsList,
+  isFetching: state.friendsListReducer.isFetching,
 });
 const mapDispatchToProps = {
   getFriendList: getFriendList,

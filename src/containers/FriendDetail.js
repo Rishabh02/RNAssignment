@@ -5,12 +5,21 @@ import {connect} from 'react-redux';
 import {registerFulfilled} from '../actions/friendListActions';
 const FriendDetailsScreen = props => {
   const {route} = props;
-  const data = route.params.data;
-  const index = route.params.index;
-  const [firstName, setFirstName] = useState(data.First_Name__c);
-  const [lastName, setLasName] = useState(data.Last_Name__c);
-  const [age, setAge] = useState(data.Age__c + '');
+  const [firstName, setFirstName] = useState('');
+  const [lastName, setLasName] = useState('');
+  const [age, setAge] = useState('');
   const [editable, setEditable] = useState(false);
+  const [friendDetails, setFriendDetails] = useState({});
+  const [index, setIndex] = useState({});
+  useEffect(() => {
+    const data = route.params && route.params.data ? route.params.data : null;
+    const index = route.params && route.params.index ? route.params.index : 0;
+    setFirstName(data.First_Name__c);
+    setLasName(data.Last_Name__c);
+    setAge(data.Age__c + '');
+    setFriendDetails(data);
+    setIndex(index);
+  }, []);
   const saveData = () => {
     if (firstName.length === 0) {
       alert('Please enter first name');
@@ -25,19 +34,19 @@ const FriendDetailsScreen = props => {
       return;
     }
     if (
-      firstName == data.First_Name__c &&
-      lastName == data.Last_Name__c &&
-      age == data.Age__c
+      firstName == friendDetails.First_Name__c &&
+      lastName == friendDetails.Last_Name__c &&
+      age == friendDetails.Age__c
     ) {
       alert('Edit values before saving');
     } else {
       Keyboard.dismiss();
-      const updateFriend = {...data};
+      const updateFriend = {...friendDetails};
       updateFriend.First_Name__c = firstName;
       updateFriend.Last_Name__c = lastName;
       updateFriend.Age__c = age;
       updateFriend.isUpdated = true;
-      const updatedList = [...props.data];
+      const updatedList = [...props.friendsList];
       updatedList[index] = updateFriend;
       // If User is connected to internet, we can post value here
       //otherwise save in redux to Sync later when internet restores
@@ -53,7 +62,7 @@ const FriendDetailsScreen = props => {
   };
   return (
     <View style={styles.container}>
-      <Text>ID: {data.Id}</Text>
+      <Text>ID: {friendDetails.Id}</Text>
       <TextInput
         style={styles.input}
         onChangeText={setFirstName}
@@ -117,7 +126,7 @@ const styles = StyleSheet.create({
   },
 });
 const mapStateToProps = state => ({
-  data: state.counter.friendsList,
+  friendsList: state.friendsListReducer.friendsList,
 });
 const mapDispatchToProps = {
   registerFulfilled: registerFulfilled,

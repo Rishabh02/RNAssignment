@@ -14,12 +14,12 @@ export default () => {
       <Stack.Screen
         name={screens.FRIEND_DETAILS_SCREEN}
         component={FriendDetailsScreen}
-        options={{headerShown: true}}
+        options={{headerShown: true, title: 'Friend Details'}}
       />
       <Stack.Screen
         name={screens.ADD_FRIEND_SCREEN}
         component={AddFriend}
-        options={{headerShown: true}}
+        options={{headerShown: true, title: 'Add Friend'}}
       />
     </Stack.Navigator>
   );

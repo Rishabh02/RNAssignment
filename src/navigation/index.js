@@ -6,7 +6,14 @@ import HomeScreen from '../containers/Home';
 import Settingscreen from '../containers/Settings';
 import FriendsStack from './FriendsStack';
 const Tab = createBottomTabNavigator();
-import {View, Text, TouchableOpacity, Image, StyleSheet} from 'react-native';
+import {
+  View,
+  Text,
+  TouchableOpacity,
+  Image,
+  StyleSheet,
+  ActivityIndicator,
+} from 'react-native';
 
 function MyTabBar({state, descriptors, navigation}) {
   return (
@@ -72,8 +79,10 @@ function MyTabBar({state, descriptors, navigation}) {
 }
 
 function App() {
+ 
   return (
-    <NavigationContainer>
+    <NavigationContainer
+      fallback={<ActivityIndicator color="blue" size="large" />}>
       <Tab.Navigator
         tabBar={props => <MyTabBar {...props} />}
         initialRouteName={screens.HOME_SCREEN}

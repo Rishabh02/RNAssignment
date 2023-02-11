@@ -9,7 +9,7 @@ const persistConfig = {
   storage: AsyncStorage,
 };
 const reducers = combineReducers({
-  counter: friendsListReducer,
+  friendsListReducer: friendsListReducer,
 });
 const persistedReducer = persistReducer(persistConfig, reducers);
 export default configureStore({

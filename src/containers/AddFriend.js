@@ -1,12 +1,34 @@
-import React, {useEffect, useState} from 'react';
-import {View, Text, StyleSheet, TextInput, Keyboard, Alert} from 'react-native';
-import {TouchableOpacity} from 'react-native-gesture-handler';
+import React, {useEffect, useState, useCallback} from 'react';
+import {
+  View,
+  Text,
+  StyleSheet,
+  TextInput,
+  Keyboard,
+  Alert,
+  Image,
+} from 'react-native';
+import {ScrollView, TouchableOpacity} from 'react-native-gesture-handler';
 import {connect} from 'react-redux';
 import {addFriend} from '../actions/friendListActions';
+import * as ImagePicker from 'react-native-image-picker';
+import {colors} from '../constants';
 const AddFriend = props => {
   const [firstName, setFirstName] = useState('');
   const [lastName, setLasName] = useState('');
   const [age, setAge] = useState('');
+  const [response, setResponse] = React.useState(null);
+
+  const onButtonPress = useCallback((type, options) => {
+    //if (type === 'capture') {
+
+    ImagePicker.launchCamera().then(response => setResponse(response));
+    //}
+  }, []);
+  console.log(JSON.stringify(response));
+  if (response) {
+    console.log(response.assets[0].uri);
+  }
   const saveData = () => {
     if (firstName.length === 0) {
       alert('Please enter first name');
@@ -40,42 +62,59 @@ const AddFriend = props => {
     ]);
   };
   return (
-    <View style={styles.container}>
-      <Text>Enter Your Friend Details</Text>
-      <TextInput
-        style={styles.input}
-        onChangeText={setFirstName}
-        value={firstName}
-        placeholder="First Name"
-        maxLength={30}
-      />
-      <TextInput
-        style={styles.input}
-        onChangeText={setLasName}
-        value={lastName}
-        placeholder="Last Name"
-        maxLength={30}
-      />
-      <TextInput
-        style={styles.input}
-        onChangeText={setAge}
-        value={age}
-        placeholder="Age"
-        keyboardType="numeric"
-        maxLength={2}
-      />
+    <ScrollView>
+      <View style={styles.container}>
+        <Text style={styles.header}>Enter Your Friend's Details</Text>
+        <TouchableOpacity style={styles.imageContainer} onPress={onButtonPress}>
+          <Image
+            resizeMode="cover"
+            resizeMethod="scale"
+            style={{height: 100, width: 100, borderRadius: 50}}
+            source={
+              response
+                ? {uri: response.assets[0].uri}
+                : require('../assets/user.png')
+            }
+          />
+        </TouchableOpacity>
+        <TextInput
+          style={styles.input}
+          onChangeText={setFirstName}
+          value={firstName}
+          placeholder="First Name"
+          maxLength={30}
+          returnKeyType='next'
+        />
+        <TextInput
+          style={styles.input}
+          onChangeText={setLasName}
+          value={lastName}
+          placeholder="Last Name"
+          maxLength={30}
+          returnKeyType='next'
+        />
+        <TextInput
+          style={styles.input}
+          onChangeText={setAge}
+          value={age}
+          placeholder="Age"
+          keyboardType="numeric"
+          maxLength={2}
+          returnKeyType='done'
+        />
 
-      <TouchableOpacity
-        onPress={() => saveData()}
-        style={{
-          ...styles.input,
-          backgroundColor: 'blue',
-          justifyContent: 'center',
-          alignItems: 'center',
-        }}>
-        <Text style={{color: 'white'}}>Save</Text>
-      </TouchableOpacity>
-    </View>
+        <TouchableOpacity
+          onPress={() => saveData()}
+          style={{
+            ...styles.input,
+            backgroundColor: 'blue',
+            justifyContent: 'center',
+            alignItems: 'center',
+          }}>
+          <Text style={{color: 'white'}}>Save</Text>
+        </TouchableOpacity>
+      </View>
+    </ScrollView>
   );
 };
 const styles = StyleSheet.create({
@@ -87,6 +126,26 @@ const styles = StyleSheet.create({
     borderColor: 'black',
     paddingLeft: 10,
     margin: 10,
+  },
+  imageContainer: {
+    alignSelf: 'center',
+    justifyContent: 'center',
+    alignItems: 'center',
+    borderWidth: 1,
+    height: 100,
+    width: 100,
+    borderRadius: 50,
+    borderColor: colors.theme_color,
+    backgroundColor: 'grey',
+    margin: 5,
+  },
+  header: {
+    marginTop: 5,
+    marginBottom: 20,
+    marginLeft: 10,
+    fontSize: 18,
+    fontWeight: 'bold',
+    color: 'black',
   },
 });
 

@@ -13,7 +13,7 @@ import {PersistGate} from 'redux-persist/integration/react';
 import {persistStore} from 'redux-persist';
 
 let persistor = persistStore(store);
-
+//Test f1
 class App extends Component {
   render() {
     return (
